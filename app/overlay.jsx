@@ -1,45 +1,62 @@
 "use client"
 import React, {useState, useEffect} from "react";
-import cities from "./citiesByCountry.jsx"
+import cities from "./countriesCities.jsx"
+import "./globals.css"
 
-export default function Overlay() {
-    const APIkey = "93c9563c219fd26bcf5872a459d436c0"
-    let cityName = "Kiruna"
-    const api = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${APIkey}`
-    // fetch(api)
-    // .then(response => {
-    //     console.log(response);
-    //     return response.json();
-    // })
-    // .then(data => {
-    //     console.log(data);
-    // })
-    // .catch(error => {
-    //     console.log(error);
-    // });
+export default function Overlay({setCity}) {
+    const [searchText, setSearchText] = useState("");
+    const [filteredCities, setFilteredCities] = useState([])
 
-    const [city, setCity] = useState("");
-
-    const handleCityChange = (event) => {
-        setCity(event.target.value);
+    function handleSearchTextChange(event) {
+        setSearchText(event.target.value)
+        searchedText(event.target.value)
     }
 
-    cities.
+    function searchedText(searchText) {
+        const filtered = cities.flatMap(country => {
+            return country["cityNames"]
+                .filter(city => city.toLowerCase().startsWith(searchText.toLowerCase()))
+                .map(city => ({
+                    city: city,
+                    country: country.country // Include country name
+                }));
+        });
 
+        setFilteredCities(filtered.slice(0, 5));
+    }
+    
     return (
         <>
-            <div className="bg-red-400 p-5 rounded-lg w-150 h-130 flex flex-row items-start justify-evenly">
+            <div className="bg-red-400 p-5 w-150 h-135 flex flex-row items-start justify-center absolute top-20 left-100">
                 <div>
-                    <h1 className="text-2xl">Add Country</h1>
-                    <input type="text"
-                    onChange={handleCityChange}
-                    value={city}
-                    className="border border-gray-300 rounded px-3 py-2 mt-2" placeholder="Country" />
+                    <div className="flex justify-center">
+                        <h1 className="text-2xl">Add Country</h1>
+                    </div>
+                    <input
+                        onChange={handleSearchTextChange}
+                        value={searchText}
+                        type="text" 
+                        className=" w-90 border border-gray-300  px-3 py-2 mt-2 outline-none" 
+                        placeholder="Country"
+                    />
+            
+                    {searchText &&
+                        <div>
+                            {filteredCities.map((city, index) => (
+                                <div className="contentHolder mt-1 w-full h-20 bg-black text-amber-50 flex flex-row justify-between items-center flex-wrap hover:bg-gray-500" key={index}>
+                                    <div className="pl-2 pr-2 w-50">
+                                        {city.city}, {city.country}
+                                    </div>
+                                    <button className="svgParent w-15 h-full flex justify-center items-center bg-[#111] cursor-pointer h:bg-[#333]" onClick={() => setCity(city)}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="svgChild" viewBox="0 0 24 24" width="24px" height="24px" fillRule="evenodd" fill="#ffff"><path fillRule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"/></svg>
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    }
                 </div>
-                {/* <div className="flex justify-end mt-3">
-                    
-                </div> */}
             </div>
         </>
     );
 }
+
