@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Overlay from "./overlay.jsx";
 import WeatherCard from "./weatherCard.jsx";
+import weatherConditions from "./weatherIcons.jsx";
 
 export default function Page() {
   const buttonRef = useRef(null);
@@ -9,6 +10,7 @@ export default function Page() {
   const [overlay, setOverlay] = useState(false);
   const [selectedCities, setSelectedCities] = useState([]);
   const [weatherInfo, setWeatherInfo] = useState([]);
+  const [loading, setLoading] = useState(true);
   const ApiKey = "93c9563c219fd26bcf5872a459d436c0";
 
   const handleOverlay = () => {
@@ -51,7 +53,8 @@ export default function Page() {
           .then((response) => response.json())
           .catch((error) => console.error("Error fetching data:", error))
       )
-    ).then((data) => {
+    )
+    .then((data) => {
       Promise.all(
         data.map((city) =>
           fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${city[0].lat}&lon=${city[0].lon}&appid=${ApiKey}`)
@@ -72,6 +75,7 @@ export default function Page() {
           ]);
         });
         setWeatherInfo(weatherData);
+        setLoading(false);
       });
     });
   }
@@ -86,6 +90,7 @@ export default function Page() {
 
   const currentTime = "15:00";
 
+  const noLoading = loading && selectedCities.length > 0; 
   return (
     <>
       <div className="flex justify-center">
@@ -103,13 +108,15 @@ export default function Page() {
         </div>
       </div>
 
+      {noLoading && <div className="text-center mt-5">Loading...</div>}
+
       {selectedCities && (
         <div className="mt-5 w-[80%] mx-auto max-w-[80%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {selectedCities.map((city, cityIndex) => (
             <div key={`city-${cityIndex}`} className="flex justify-center">
               {weatherInfo[cityIndex]?.map((weather, weatherIndex) => (
                 <WeatherCard
-                  key={`weather-${cityIndex}-${weatherIndex}`}
+                  key={`weather-${cityIndex}-${weatherIndex}`}  
                   city={city.city}
                   country={city.country}
                   time={currentTime}
@@ -118,7 +125,11 @@ export default function Page() {
                   windSpeed={weather.windSpeed}
                   humidity={weather.humidity}
                   pressure={weather.pressure}
-                />
+                  weatherIcon={weatherConditions.map((condition, index) => (
+                    <div key={index}>{condition.name.toLowerCase() === weather.weatherStatus.toLowerCase() && condition.icon}</div>
+                    ))
+                  }
+                  />
               ))}
             </div>
           ))}
@@ -128,7 +139,7 @@ export default function Page() {
       <div ref={overlayRef} className="fixed inset-0 backdrop-blur-sm z-10 hidden">
         <button
           onClick={closeOverlay}
-          className="absolute top-20 left-240 bg-blue-400 p-2 hover:bg-blue-600 cursor-pointer z-30"
+          className="absolute top-20 left-240 bg-blue-400 p-2 hover:bg-blue-600 cursor-pointer z-30 rounded-tr-2xl rounded-bl-2xl"
         >
           <img src="icons8-close.svg" alt="Close Icon" className="w-6" />
         </button>

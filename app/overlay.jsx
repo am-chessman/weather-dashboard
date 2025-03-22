@@ -27,7 +27,7 @@ export default function Overlay({setCity}) {
     
     return (
         <>
-            <div className="bg-red-400 p-5 w-150 h-135 flex flex-row items-start justify-center absolute top-20 left-100">
+            <div className="bg-red-400 p-5 h-135 md:w-150 md:h-135 sm:w-50 sm:h-75 rounded-3xl flex flex-row items-start justify-center absolute top-20 left-100">
                 <div>
                     <div className="flex justify-center">
                         <h1 className="text-2xl">Add Country</h1>
@@ -36,14 +36,14 @@ export default function Overlay({setCity}) {
                         onChange={handleSearchTextChange}
                         value={searchText}
                         type="text" 
-                        className=" w-90 border border-gray-300  px-3 py-2 mt-2 outline-none" 
+                        className=" w-90 border border-gray-300  px-3 py-2 mt-2 outline-none rounded-xl" 
                         placeholder="Country"
                     />
             
                     {searchText &&
                         <div>
                             {filteredCities.map((city, index) => (
-                                <div className="contentHolder mt-1 w-full h-20 bg-black text-amber-50 flex flex-row justify-between items-center flex-wrap hover:bg-gray-500" key={index}>
+                                <div className="contentHolder mt-1 w-full h-20 bg-orange-600 text-amber-50 flex flex-row justify-between items-center flex-wrap hover:bg-gray-500" key={index}>
                                     <div className="pl-2 pr-2 w-50">
                                         {city.city}, {city.country}
                                     </div>
