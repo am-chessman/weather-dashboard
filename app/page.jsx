@@ -11,6 +11,8 @@ export default function Page() {
   const [selectedCities, setSelectedCities] = useState([]);
   const [weatherInfo, setWeatherInfo] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cityAddition, setCityAddition] = useState(false);
+
   const ApiKey = "93c9563c219fd26bcf5872a459d436c0";
 
   const handleOverlay = () => {
@@ -21,10 +23,17 @@ export default function Page() {
     setOverlay(false);
   };
 
+  const handleCityClickedState = (state) => {
+    setCityAddition(state)
+    if(state) {
+      setOverlay(false);
+    }
+  }
+
   useEffect(() => {
     if (overlay) {
       overlayRef.current.classList.remove("hidden");
-    } else {
+    } else if(overlay === false || cityAddition === false) {
       overlayRef.current.classList.add("hidden");
     }
   }, [overlay]);
@@ -82,9 +91,16 @@ export default function Page() {
 
   function chooseCity(city) {
     setSelectedCities((prevCities) => {
-      const updatedCities = [...prevCities, city];
-      fetchWeatherData(updatedCities); // Fetch weather immediately after adding a new city
-      return updatedCities;
+      const cityExists = prevCities.some(
+        (c) => c.city.toLowerCase() === city.city.toLowerCase()
+      );
+      if (!cityExists) {
+        const updatedCities = [...prevCities, city];
+        fetchWeatherData(updatedCities); 
+        setOverlay(false);
+        return updatedCities;
+      }
+      return prevCities;
     });
   }
 
@@ -94,13 +110,13 @@ export default function Page() {
   return (
     <>
       <div className="flex justify-center">
-        <div className="h-20 flex justify-between items-center bg-amber-400 rounded-b-2xl px-5 w-[80%] mx-auto max-w-[80%]">
-          <h1 className="text-3xl">Weather Dashboard</h1>
+        <div className="h-20 flex justify-between items-center bg-amber-400 rounded-b-2xl px-5 sm:w-[90%] md:w-[80%] mx-auto max-w-full">
+          <h1 className="text-2xl sm:text-2l md:text-3xl lg:text-3xl">Weather Dashboard</h1>
           <div className="hover:cursor-pointer">
             <button
               onClick={handleOverlay}
               ref={buttonRef}
-              className="ml-auto bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600"
+              className="ml-auto sm:h-10 text-md bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600"
             >
               Add Country
             </button>
@@ -139,12 +155,15 @@ export default function Page() {
       <div ref={overlayRef} className="fixed inset-0 backdrop-blur-sm z-10 hidden">
         <button
           onClick={closeOverlay}
-          className="absolute top-20 left-240 bg-blue-400 p-2 hover:bg-blue-600 cursor-pointer z-30 rounded-tr-2xl rounded-bl-2xl"
+          className="absolute top-20 left-75 md:top-20 md:left-246 lg:top-20 lg:left-227 bg-blue-400 p-2 hover:bg-blue-600 cursor-pointer z-30"
         >
           <img src="icons8-close.svg" alt="Close Icon" className="w-6" />
         </button>
         <div className="fixed inset-0 flex justify-center items-center z-20">
-          <Overlay setCity={chooseCity} />
+          <Overlay 
+            setCity={chooseCity}
+            setCityClickedState={handleCityClickedState}
+          />
         </div>
       </div>
     </>
