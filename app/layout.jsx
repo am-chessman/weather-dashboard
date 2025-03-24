@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata = {
   name: "Weather Dashboard",
@@ -16,6 +17,7 @@ export default function Layout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
+        <Analytics/>
         {children}
       </body>
     </html>
