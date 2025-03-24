@@ -58,7 +58,7 @@ export default function Page() {
     let weatherData = [];
     Promise.all(
       cities.map((city) =>
-        fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city.city}&appid=${ApiKey}`)
+        fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city.city}&appid=${ApiKey}`)
           .then((response) => response.json())
           .catch((error) => console.error("Error fetching data:", error))
       )
@@ -66,7 +66,7 @@ export default function Page() {
     .then((data) => {
       Promise.all(
         data.map((city) =>
-          fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${city[0].lat}&lon=${city[0].lon}&appid=${ApiKey}`)
+          fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${city[0].lat}&lon=${city[0].lon}&appid=${ApiKey}`)
             .then((response) => response.json())
             .catch((error) => console.error("Error fetching data:", error))
         )
