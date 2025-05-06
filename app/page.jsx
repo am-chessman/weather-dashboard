@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import Overlay from "./overlay.jsx";
-import WeatherCard from "./weatherCard.jsx";
-import weatherConditions from "./weatherIcons.jsx";
+import Overlay from "../components/overlay.jsx";
+import WeatherCard from "../components/weatherCard.jsx";
+import weatherConditions from "../assets/weatherIcons.jsx";
 
 export default function Page() {
   const buttonRef = useRef(null);
@@ -12,6 +12,7 @@ export default function Page() {
   const [weatherInfo, setWeatherInfo] = useState([]);
   const [loading, setLoading] = useState(true);
   const [cityAddition, setCityAddition] = useState(false);
+  const [removedCity, setRemovedCity] = useState("")
 
   const ApiKey = "93c9563c219fd26bcf5872a459d436c0";
 
@@ -29,6 +30,12 @@ export default function Page() {
       setOverlay(false);
     }
   }
+
+  const handleRemoveCity = (cityName) => {
+    setSelectedCities((prevCities) => 
+      prevCities.filter((city) => city.city !== cityName) 
+    )
+  } 
 
   useEffect(() => {
     if (overlay) {
@@ -91,6 +98,7 @@ export default function Page() {
 
   function chooseCity(city) {
     setSelectedCities((prevCities) => {
+      handleRemoveCity(removedCity)
       const cityExists = prevCities.some(
         (c) => c.city.toLowerCase() === city.city.toLowerCase()
       );
@@ -106,7 +114,10 @@ export default function Page() {
 
   const currentTime = "15:00";
 
-  const noLoading = loading && selectedCities.length > 0; 
+  const noLoading = loading && selectedCities.length > 0;
+
+  console.log(selectedCities)
+  
   return (
     <>
       <div className="flex justify-center">
@@ -133,6 +144,10 @@ export default function Page() {
               {weatherInfo[cityIndex]?.map((weather, weatherIndex) => (
                 <WeatherCard
                   key={`weather-${cityIndex}-${weatherIndex}`}  
+                  setRemoveCity={(city) => {
+                    setRemovedCity(city)
+                  }}
+                  
                   city={city.city}
                   country={city.country}
                   time={currentTime}
@@ -155,7 +170,7 @@ export default function Page() {
       <div ref={overlayRef} className="fixed inset-0 backdrop-blur-sm z-10 hidden">
         <button
           onClick={closeOverlay}
-          className="absolute top-20 left-75 md:top-20 md:left-246 lg:top-20 lg:left-227 bg-blue-400 p-2 hover:bg-blue-600 cursor-pointer z-30"
+          className="absolute top-20 left-75 md:top-20 md:left-246 lg:top-10 lg:left-206 bg-blue-400 p-2 hover:bg-blue-600 cursor-pointer z-30"
         >
           <img src="icons8-close.svg" alt="Close Icon" className="w-6" />
         </button>

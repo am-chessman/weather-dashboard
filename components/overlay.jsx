@@ -1,17 +1,15 @@
 "use client"
 import React, {useState, useEffect} from "react";
-import cities from "./countriesCities.jsx"
-import "./globals.css"
+import cities from "../assets/countriesCities.jsx"
+import "../styles/globals.css"
 
-export default function Overlay({setCity, setCityClickedState}) {
+export default function Overlay({setCity}) {
     const [searchText, setSearchText] = useState("");
     const [filteredCities, setFilteredCities] = useState([])
-    const [cityClicked, setCityClicked] = useState(true)
 
     function handleSearchTextChange(event) {
         setSearchText(event.target.value)
         searchedText(event.target.value)
-
     }
 
     function searchedText(searchText) {
@@ -33,7 +31,7 @@ export default function Overlay({setCity, setCityClickedState}) {
     
     return (
         <>
-            <div className="bg-gray-900 p-5 h-120 w-80 max-w-md md:w-150 md:h-135 sm:w-20 sm:h-50 flex flex-row items-start justify-center absolute top-20 left-1/2 -translate-x-1/2 text-amber-50 ">
+            <div className="bg-gray-900 p-5 h-120 w-80 max-w-md md:w-150 md:h-135 sm:w-20 sm:h-50 flex flex-row items-start justify-center absolute top-10 left-1/2 -translate-x-1/2 text-amber-50 ">
                 <div>
                     <div className="flex justify-center">
                         <h1 className="text-2xl">Add Country</h1>
@@ -59,7 +57,7 @@ export default function Overlay({setCity, setCityClickedState}) {
                                         </div>
                                     </div>
                                     <button className="svgParent w-15 h-full flex justify-center items-center bg-[#4f5466] cursor-pointer h:bg-[#4f5466]" 
-                                        onClick={() => {setCity(city); setCityClickedState(true);}}>
+                                        onClick={() => {setCity(city)}}>
                                         <svg xmlns="http://www.w3.org/2000/svg" className="svgChild" viewBox="0 0 24 24" width="24px" height="24px" fillRule="evenodd" fill="#ffff"><path fillRule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"/></svg>
                                     </button>
                                 </div>

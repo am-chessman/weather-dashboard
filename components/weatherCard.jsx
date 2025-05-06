@@ -1,9 +1,30 @@
-import "./weatherCard.css"
-import "./weatherIcons.css"
+"use client"
+import {useState, useEffect, useRef} from "react"
+import "../styles/weatherCard.css"
+import "../styles/weatherIcons.css"
 
-export default function WeatherCard({city, country, time, temp, weatherDesc, windSpeed, humidity, pressure, weatherIcon}) {
+export default function WeatherCard({city, country, time, temp, weatherDesc, windSpeed, humidity, pressure, weatherIcon, setRemoveCity}) {
+    const closeRef = useRef(null)
+    const [removeCard, setRemoveCard] = useState(false);
+
+    const handleCardRemoval = () => {
+        setRemoveCard(true)
+    }
+
+    // useEffect(() => {
+    //     const closeRefBtn = closeRef.current
+    //     if(removeCard != false)
+    //         {
+    //             closeRefBtn.classList.add("hidden")
+    //         }
+    // }, [removeCard])
+
+    console.log(removeCard)
+        
     return (
-        <div className="weather-card">
+        <div 
+        ref={closeRef}
+        className={`absolute top-0 right-0 ${removeCard ? "hidden" : "weather-card"}`}>
             <div className="card-content-wrapper">
                 <div className="card-header-wrapper">
                     <div className="location">
@@ -16,6 +37,16 @@ export default function WeatherCard({city, country, time, temp, weatherDesc, win
                     </div>
                     <div className="time">
                         {time}
+                    </div>
+                    <div 
+                    onClick={() =>{
+                        handleCardRemoval();
+                        setRemoveCity(city)}}
+                        className={`absolute top-0 right-0 ${removeCard ? "hidden" : ""}`}
+                    >
+                        <div className="w-8 h-8 cursor-pointer flex justify-center items-center rounded-bl-2xl rounded-tr-2xl bg-gray-300 hover:bg-gray-500 transition-all duration-500">
+                            <i className="bi bi-dash-lg"></i>
+                        </div>
                     </div>
                 </div>
                 <div className="card-body-wrapper">

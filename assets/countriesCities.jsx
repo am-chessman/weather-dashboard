@@ -199,7 +199,7 @@ const cityNames = [
         ]
     }, 
     {
-        country: "Congo (Democratic Republic)", 
+        country: "Congo (D.R.C)", 
         cityNames: [
             "Yangambi", "Watsa", "Wamba", "Uvira", "Tshikapa", "Sake", "Rutshuru", "Pweto", "Nyunzu", "Mwene-Ditu", "Mweka", "Mulongo", "Mangbwalu", "Baudhuinville", "Miabi", "Mbuji-Mayi", "Manono", "Malemba-Nkulu", "Lusambo", "Luputa", "Lukula", "Luebo", "Lubero", "Lubao", "Lodja", "Lisala", "Kongolo", "Kisangani", "Kirumba", "Kipamba", "Kindu", "Kayna", "Katwa", "Katanda", "Kasongo", "Kanyobagonga", "Kanyama", "Kananga", "Kampene", "Kamina", "Kalima", "Kalemie", "Kabinda", "Kabeya-Kamwanga", "Kabare", "Kabalo", "Isiro", "Isamba", "Ilebo", "Goma", "Gbadolite", "Gandajika", "Djugu", "Demba", "Butembo", "Buta", "Businga", "Bunia", "Bumba", "Bukavu", "Bukama", "Bondo", "Boende", "Binga", "Beni", "Basoko", "Bakwa", "Babamba", "Aru", "Aketi", "Tshilenge", "Mokambo", "Malemba", "Lubumbashi", "Likasi", "Kolwezi", "Kipushi", "Kambove", "Fungurume", "Zongo", "Tshela", "Nioki", "Mushie", "Moanda", "Mbanza-Ngungu", "Mbandaka", "Matadi", "Masi-Manimba", "Mangai", "Lukolela", "Libenge", "Kutu", "Kinshasa", "Kimpese", "Kikwit", "Kenge", "Kasongo-Lunda", "Kasangulu", "Inongo", "Inkisi", "Idiofa", "Gemena", "Dungu", "Dibaya-Lubwe", "Bulungu", "Bosobolo", "Boma", "Bolobo", "Basankusu", "Bandundu Province", "Masina", "Hyosha", "Mwene", "Kituku", "Mangina"
         ]
@@ -643,13 +643,13 @@ const cityNames = [
     ]
     }, 
     {
-    country: "Korea (Democratic People's Republic of)", 
+    country: "North Korea", 
     cityNames: [
     "Ryonggang-ŭp", "Yŏngbyŏn", "Yŏnan-ŭp", "Yŏmju-ŭp", "Wŏnsan", "Ŭnch’ŏn-ŭp", "Ŭllyul", "T’ongch’ŏn-ŭp", "Tŏkch’ŏn", "T’aet’an-ŭp", "Sŭngho 1-tong", "Sunch’ŏn", "Sunan", "Songnim-ni", "Songhwa", "Sinwŏn-ŭp", "Sil-li", "Sinmak", "Sinch’ŏn-ŭp", "Sinanju", "Sariwŏn-si", "Sangsŏng-ni", "Samho-rodongjagu", "Samch’ŏn", "Pyongyang", "P’yŏngsŏng", "Pongch’ŏn-ŭp", "Pyŏksŏng-ŭp", "Panghyŏn-dong", "Paech’ŏn-ŭp", "Ongjin", "Namp’o", "Man’gyŏngdae-ri", "Kwaksan", "Kwail-ŭp", "Kusŏng", "Kujang-ŭp", "Kowŏn-ŭp", "Kosan", "Koksan-ŭp", "Kangnyŏng", "Kangdong-ŭp", "Kaesŏng", "Kaech’ŏn", "Hwangju-ŭp", "Twimoraet’ŏ", "Hŭngnam", "Hŭkkyo-ri", "Hoeyang", "Hamhŭng", "Haeju", "Chunghwa", "Chŏngju", "Ch’ŏngdan-ŭp", "Changyŏn", "Chaeryŏng-ŭp", "Chaeryŏng-ni", "Ayang-ni", "Anju", "Anbyŏn-ŭp", "Anak", "Ch’ŏsal-li", "Sinsang-ni", "Paek'ak", "Yuktae-dong", "Yŏnsa-ŭp", "Ungsang-nodongjagu", "Ŭndŏk", "Uiju", "Sŭngam-nodongjagu", "Songwŏn", "Sŏnbong", "Sinŭiju", "Sijung", "Satan", "Sakchu-ŭp", "Puryŏng", "Pukchil-lodongjagu", "Yŏnggwang-ŭp", "Ŏrang", "Onsŏng", "Ranam", "Namyang", "Rajin", "Songwŏn-ŭp", "Hwasŏng", "Myŏngch’ŏn", "Musan-ŭp", "Manp’o", "Kyŏngwŏn", "Kyŏngsŏng", "Kop’ung", "Kilju", "Kapsan-ŭp", "Kanggye", "Iwŏn-ŭp", "Hyesan-dong", "Hyesan", "Hwadae", "Hongwŏn", "Hoeryŏng", "Hoemul-li", "Hau-ri", "Chunggang", "Chongjin", "Chasŏng", "Changam-ch’on", "Aoji", "Sŭngjibaegam", "Komusan Il-tong", "Myŏnggan-dong", "Yŏch’im-dong"
     ]
     }, 
     {
-    country: "Korea (Republic of)", 
+    country: "South Korea", 
     cityNames: [
     "Heunghae", "Yeonil", "Neietsu", "Yeongju", "Yeonggwang", "Yeongdong", "Eisen", "Yeoju", "Yesan", "Yangsan", "Yangp'yŏng", "Yangju", "Yanggu", "Wŏnju", "Wanju", "Waegwan", "Ulsan", "Uijeongbu-si", "Tangjin", "Taesal-li", "Daejeon", "Daegu", "Boryeong", "T’aebaek", "Suwon", "Suncheon", "Seoul", "Seosan", "Jenzan", "Seonghwan", "Sokcho", "Sintansin", "Sangju", "Santyoku", "Pyeongtaek", "Pyeongchang", "Buyeo", "Busan", "Bucheon-si", "Puan", "Beolgyo", "Pohang", "Osan", "Asan", "Okcheon", "Kosong", "Nonsan", "Nangen", "Namsa", "Naju", "Munsan", "Mungyeong", "Muan", "Mokpo", "Miryang", "Masan", "Gyeongsan-si", "Gyeongju", "Kwangyang", "Gwangju", "Gwangju", "Kurye", "Guri-si", "Kunwi", "Gunsan", "Gunpo", "Kinzan", "Gumi", "Goyang-si", "Goseong", "Gongju", "Kyosai", "Koesan", "Koch'ang", "Kimje", "Kimhae", "Gimcheon", "Gijang", "Gapyeong", "Gangneung", "Ganghwa-gun", "Iksan", "Incheon", "Imsil", "Icheon-si", "Hwasun", "Hwaseong-si", "Hwacheon", "Hongseong", "Hongch’ŏn", "Hayang", "Haenam", "Chungju", "Chuncheon", "Jumunjin", "Jeonju", "Cheongsong gun", "Cheongju-si", "Cheonan", "Chinju", "Chinch'ŏn", "Jinan-gun", "Jeju City", "Changwon", "Changsu", "Anyang-si", "Anseong", "Ansan-si", "Andong", "Gaigeturi", "Sinhyeon", "Yeosu", "Yŏnmu", "Donghae City", "Pubal", "Seongnam-si", "Hanam", "Hwado", "Namyangju", "Ungsang", "Wabu", "Naesŏ", "Hwawŏn", "Gwangmyeong", "Sinan", "Uiwang", "Seogwipo", "Yongsan-dong", "Songgangdong", "Changnyeong", "Sejong", "Jeongeup", "Yeongam"
     ]
@@ -673,7 +673,7 @@ const cityNames = [
     ]
     }, 
     {
-    country: "Lao People's Democratic Republic", 
+    country: "Laos", 
     cityNames: [
     "Vientiane", "Xam Nua", "Savannakhet", "Salavan", "Phôngsali", "Pakse", "Muang Xay", "Sainyabuli", "Vang Vieng", "Muang Phônsavan", "Muang Phôn-Hông", "Pakxan", "Muang Không", "Thakhèk", "Luang Prabang", "Luang Namtha", "Champasak", "Ban Houayxay", "Attapeu", "Ban Houakhoua", "Sekong"
     ]
@@ -782,7 +782,7 @@ const cityNames = [
     ]
     }, 
     {
-    country: "Macedonia (Former Yugoslav Republic of)", 
+    country: "Macedonia", 
     cityNames: [
     "Zrnovci", "Zelino", "Zelenikovo", "Zajas", "Vrutok", "Vrapčište", "Vinica", "Vevčani", "Velesta", "Vasilevo", "Valandovo", "Veles", "Tetovo", "Tearce", "Sveti Nikole", "Studeničani", "Strumica", "Struga", "Shtip", "Старо Нагоричане", "Star Dojran", "Sopište", "Skopje", "Šipkovica", "Saraj", "Rostusa", "Rosoman", "Resen", "Rankovce", "Radovis", "Radishani", "Probishtip", "Prilep", "Plasnica", "Петровец", "Pehčevo", "Ohrid", "Novo Selo", "Novaci", "Negotino", "Negotino", "Demir Hisar", "Mogila", "Lipkovo", "Labunista", "Kumanovo", "Krusevo", "Krivogashtani", "Kriva Palanka", "Kratovo", "Kondovo", "Konče", "Kochani", "Kičevo", "Kavadarci", "Karbinci", "Kamenjane", "Makedonska Kamenica", "Jegunovce", "Gradsko", "Gostivar", "Gevgelija", "Lozovo", "Džepčište", "Dračevo", "Gjorče Petro", "Dolneni", "Dolna Banjica", "Demir Kapija", "Delogožda", "Delcevo", "Debar", "Чучер - Сандево", "Cegrane", "Čaška", "Brvenica", "Makedonski Brod", "Bosilovo", "Bogovinje", "Bogdanci", "Bitola", "Berovo", "Belčišta", "Арачиново", "Šuto Orizare", "Butel", "Čair", "Ilinden", "Kisela Voda", "Centar Župa"
     ]
@@ -1185,7 +1185,7 @@ const cityNames = [
         ]
     }, 
     {
-        country: "Syrian Arab Republic", 
+        country: "Syrian", 
         cityNames: [
             "Yabrūd", "Ţayyibat al Imām", "Ţarţūs", "Tall Rif‘at", "Tallkalakh", "Tallbīsah", "Ţafas", "Tadmur", "Tādif", "Şūrān", "Subaykhān", "Shaykh Miskīn", "Shahbā", "Saraqib", "Salqīn", "As Salamīyah", "Şalākhid", "Şāfītā", "Qaţanā", "Jāsim", "Qārah", "Kabbasin", "Nubl", "Mūrak", "Mukharram al Fawqānī", "Maşyāf", "Manbij", "Ma‘arratmişrīn", "Qabbāsīn", "Khān Shaykhūn", "Kafr Zaytā", "Kafr Takhārīm", "Kafranbel", "Kafr Lāhā", "Jisr ash Shughūr", "Jayrūd", "Jarābulus", "Jablah", "Izra‘", "‘Irbīn", "Inkhil", "Idlib", "Homs", "Ḩarastā", "Ḩamāh", "Ḩalfāyā", "Aleppo", "Ad Duraykīsh", "Dūmā", "Damascus", "Dayr Ḩāfir", "Deir ez-Zor", "Dayr al ‘Aşāfīr", "Ad Darbāsīyah", "Dārayyā", "Dar‘ā", "Burj Islām", "Buq‘ātā", "Binnish", "Batabo", "Bāniyās", "Az Zabadānī", "I‘zāz", "‘Ayn al ‘Arab", "At Tall", "Ath Thawrah", "As-Suwayda", "Aş Şanamayn", "As Safīrah", "Ar Rastan", "Ar Raqqah", "An Nabk", "‘Āmūdā", "Al Ghanţū", "Al Quţayfah", "Al Quşayr", "Al Qunayţirah", "Al Qaryatayn", "Al Mayādīn", "Latakia", "Al Kiswah", "Al Ḩasakah", "Al Ḩirāk", "Al Bāb", "‘Afrīn", "Afis", "Ad Dānā", "Ālbū Kamāl", "Hajīn", "Tremseh"
         ]
@@ -1287,7 +1287,7 @@ const cityNames = [
         ]
     }, 
     {
-        country: "Tanzania (United Republic of)", 
+        country: "Tanzania", 
         cityNames: [
             "Zanzibar", "Wete", "Vwawa", "Vikindu", "Uyovu", "Uvinza", "Utete", "Utengule", "Usoke", "Ushirombo", "Usevia", "Usangi", "Usagara", "Usa River", "Urunda", "Urambo", "Ulenje", "Tunduma", "Tumbi", "Tukuyu", "Tinde", "Tarime", "Tanga", "Tabora", "Sumbawanga", "Soni", "Songwa", "Somanda", "Sokoni", "Sirari", "Singida", "Sikonge", "Shirati", "Shinyanga", "Shelui", "Shanwa", "Sepuka", "Sengerema", "Same", "Rulenge", "Rujewa", "Puma", "Poli", "Pangani", "Old Shinyanga", "Nzega", "Nyanguge", "Nyamuswa", "Nyalikungu", "Nyakahanga", "Nyakabindi", "Nsunga", "Nshamba", "Nkove", "Nkoaranga", "Njombe", "Nguruka", "Ngudu", "Ngorongoro", "Ngerengere", "Ngara", "Ndungu", "Ndago", "Nansio", "Nangwa", "Namanyere", "Namanga", "Nakatunguru", "Naberera", "Mwembe", "Mwaya", "Mwanza", "Mwanga", "Mwadui", "Mvomero", "Musoma", "Muriti", "Mungaa", "Muleba", "Muheza", "Mugumu", "Mugango", "Mtwango", "Mto wa Mbu", "Mtinko", "Mtimbira", "Mtambile", "Msowero", "Msanga", "Mpwapwa", "Mpanda", "Moshi", "Morogoro", "Monduli", "Mlowo", "Mlimba", "Mlangali", "Mlandizi", "Mlalo", "Mkuranga", "Mkokotoni", "Mkoani", "Mwandiga", "Misungwi", "Misasi", "Mikumi", "Micheweni", "Mhango", "Mgandu", "Mbulu", "Mbuguni", "Mbeya", "Mazinde", "Matundasi", "Matui", "Matonga", "Matamba", "Matai", "Maswa", "Masumbwe", "Masoko", "Maramba", "Mapinga", "Manyoni", "Maneromango", "Malya", "Malinyi", "Malangali", "Malampaka", "Makuyuni", "Makuyuni", "Makungu", "Makumbako", "Makongolosi", "Makanya", "Majengo", "Mahonda", "Mahenge", "Mahanje", "Kihangara", "Magugu", "Magomeni", "Magomeni", "Magole", "Mafinga", "Mabamba", "Mabama", "Lushoto", "Lupiro", "Lugoba", "Lubata", "Longido", "Liwale", "Lembeni", "Lalago", "Laela", "Kyela", "Kyaka", "Kwakoa", "Korogwe", "Kongwa", "Kondoa", "Konde", "Koani", "Kiwira", "Kisiwani", "Kishapu", "Kisesa", "Kisesa", "Kisarawe", "Kisanga", "Kirando", "Kiomboi", "Kintinku", "Kingori", "Kimamba", "Kilwa Masoko", "Kilosa", "Kilindoni", "Kilimatinde", "Kihurio", "Kigoma", "Kidodi", "Kidatu", "Kibondo", "Kibiti", "Kibaya", "Kibara", "Kibakwe", "Kibaha", "Katumba", "Katoro", "Katoro", "Katesh", "Katerero", "Kasulu", "Kasamwa", "Karema", "Kiratu", "Kandete", "Kamachumu", "Kaliua", "Kakonko", "Kahama", "Kabanga", "Izazi", "Itumba", "Itigi", "Issenye", "Isaka", "Iringa", "Ipinda", "Inyonga", "Ilula", "Ilongero", "Ilembula", "Ikwiriri", "Ikungi", "Igurusi", "Igurubi", "Igunga", "Igugunu", "Ifakara", "Hedaru", "Handeni", "Geita", "Geiro", "Galappo", "Endasak", "Dunda", "Dongobesh", "Dodoma", "Dar es Salaam", "Dareda", "Chimala", "Chato", "Chanika", "Chalinze", "Chala", "Chake Chake", "Butiama", "Buseresere", "Bungu", "Bunda", "Bukoba", "Bukene", "Bugene", "Bugarama", "Boma la Ngombe", "Biharamulo", "Basotu", "Bashanet", "Bariadi", "Bagamoyo", "Babati", "Arusha", "Tunduru", "Tingi", "Tandahimba", "Songea", "Ruangwa", "Nyangao", "Newala Kisimani", "Newala", "Nanyamba", "Nanhyanga", "Nangomba", "Nanganga", "Namikupa", "Namalenga", "Nachingwea", "Mtwara", "Mtama", "Mingoyo", "Mbinga", "Mbekenyera", "Mbamba Bay", "Matiri", "Masuguru", "Masasi", "Maposeni", "Manda", "Mahuta", "Madimba", "Lulindi", "Lukuledi", "Luchingu", "Liuli", "Lindi", "Kitangari", "Kitama", "Kigonsera", "Chiungutwa", "Merelani", "Nungwi", "Magu", "Mhalamba", "Kisasa", "Tarakea", "Diobahika", "Dumila", "Kibaigwa", "Madizini", "Mafinga", "Matongo", "Mwandege", "Mwanhuzi", "Ruaha"
         ]
