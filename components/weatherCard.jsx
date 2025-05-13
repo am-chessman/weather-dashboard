@@ -1,9 +1,9 @@
 "use client"
-import {useState, useEffect, useRef} from "react"
+import {useState, useRef} from "react"
 import "../styles/weatherCard.css"
 import "../styles/weatherIcons.css"
 
-export default function WeatherCard({city, country, time, temp, weatherDesc, windSpeed, humidity, pressure, weatherIcon, setRemoveCity}) {
+export default function WeatherCard({city, country, time, temp, weatherDesc, windSpeed, humidity, pressure, weatherIcon, setRemovedCard, getCardRemovedStatus}) {
     const closeRef = useRef(null)
     const [removeCard, setRemoveCard] = useState(false);
 
@@ -36,12 +36,17 @@ export default function WeatherCard({city, country, time, temp, weatherDesc, win
                         </div>
                     </div>
                     <div className="time">
-                        {time}
+                        {/* {time} */}
                     </div>
                     <div 
                     onClick={() =>{
                         handleCardRemoval();
-                        setRemoveCity(city)}}
+                        setRemovedCard({
+                            "city": city,
+                            "country": country
+                        });
+                        getCardRemovedStatus(true);
+                    }}
                         className={`absolute top-0 right-0 ${removeCard ? "hidden" : ""}`}
                     >
                         <div className="w-8 h-8 cursor-pointer flex justify-center items-center rounded-bl-2xl rounded-tr-2xl bg-gray-300 hover:bg-gray-500 transition-all duration-500">

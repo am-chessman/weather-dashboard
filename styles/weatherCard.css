@@ -103,7 +103,7 @@ font-family: 'Roboto', sans-serif;
         display: flex;
         flex-direction: column;
         gap: 5px;
-        width: 45%;
+        width: 48%;
 
             .wind-element, .humidity-element, .pressure-element {
                 display: flex;
@@ -123,4 +123,5 @@ font-family: 'Roboto', sans-serif;
         text-align: right;
         transform: scale(2.5);
     }
+
 }

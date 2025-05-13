@@ -1,5 +1,5 @@
 "use client"
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import cities from "../assets/countriesCities.jsx"
 import "../styles/globals.css"
 
@@ -23,10 +23,6 @@ export default function Overlay({setCity}) {
         });
 
         setFilteredCities(filtered.slice(0, 5));
-    }
-
-    function addCity() {
-        setCityClicked(true)
     }
     
     return (
