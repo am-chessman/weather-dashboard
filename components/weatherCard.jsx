@@ -1,94 +1,104 @@
-"use client"
-import {useState, useEffect, useRef} from "react"
-import "../styles/weatherCard.css"
-import "../styles/weatherIcons.css"
+"use client";
 
-export default function WeatherCard({city, country, time, temp, weatherDesc, windSpeed, humidity, pressure, weatherIcon, setRemoveCity}) {
-    const closeRef = useRef(null)
-    const [removeCard, setRemoveCard] = useState(false);
+import "../styles/weatherCard.css";
+import "../styles/weatherIcons.css";
 
-    const handleCardRemoval = () => {
-        setRemoveCard(true)
-    }
-
-    // useEffect(() => {
-    //     const closeRefBtn = closeRef.current
-    //     if(removeCard != false)
-    //         {
-    //             closeRefBtn.classList.add("hidden")
-    //         }
-    // }, [removeCard])
-
-    console.log(removeCard)
-        
+export default function WeatherCard({ city, country, time, weather, weatherIcon, onRemove }) {
+  if (!weather) {
     return (
-        <div 
-        ref={closeRef}
-        className={`absolute top-0 right-0 ${removeCard ? "hidden" : "weather-card"}`}>
-            <div className="card-content-wrapper">
-                <div className="card-header-wrapper">
-                    <div className="location">
-                        <div className="city">
-                            <p>{city}</p>
-                        </div>
-                        <div className="country">
-                            <p>{country}</p>
-                        </div>
-                    </div>
-                    <div className="time">
-                        {time}
-                    </div>
-                    <div 
-                    onClick={() =>{
-                        handleCardRemoval();
-                        setRemoveCity(city)}}
-                        className={`absolute top-0 right-0 ${removeCard ? "hidden" : ""}`}
-                    >
-                        <div className="w-8 h-8 cursor-pointer flex justify-center items-center rounded-bl-2xl rounded-tr-2xl bg-gray-300 hover:bg-gray-500 transition-all duration-500">
-                            <i className="bi bi-dash-lg"></i>
-                        </div>
-                    </div>
-                </div>
-                <div className="card-body-wrapper">
-                    <div className="temp">
-                        <p>{temp}&#176;C</p>
-                    </div>
-                    <div className="weather-desc">
-                        <p>{weatherDesc}</p>
-                    </div>
-                </div>
-                <div className="card-footer-wrapper">
-                    <div className="weather-details">
-                        <div className="wind-element">
-                            <div className="wind-icon">
-                                <i className="bi bi-wind"></i>
-                            </div>
-                            <div className="wind-speed">
-                                <p>{windSpeed} m/s</p>
-                            </div>
-                        </div>
-                        <div className="humidity-element">
-                            <div className="humidity-icon">
-                                <i className="bi bi-droplet"></i>
-                            </div>
-                            <div className="humitidy-percentage">
-                                <p>{humidity}%</p>
-                            </div>
-                        </div>
-                        <div className="pressure-element">
-                            <div className="pressure-icon">
-                                <i className="bi bi-speedometer"></i>
-                            </div>
-                            <div className="pressure-value">
-                                <p>{pressure} mb</p>
-                            </div>
-                        </div>     
-                    </div>      
-                    <div className="weather-icon">
-                        {weatherIcon}
-                    </div>      
-                </div>
+      <article className="weather-card">
+        <div className="card-content-wrapper">
+          <div className="card-header-wrapper">
+            <div className="location">
+              <div className="city">
+                <p>{city}</p>
+              </div>
+              <div className="country">
+                <p>{country}</p>
+              </div>
             </div>
+            <div className="time">{time}</div>
+          </div>
+          <p className="text-sm text-slate-500">Loading weather...</p>
         </div>
-    )
+      </article>
+    );
+  }
+
+  if (weather.error) {
+    return (
+      <article className="weather-card">
+        <div className="card-content-wrapper">
+          <div className="card-header-wrapper">
+            <div className="location">
+              <div className="city">
+                <p>{city}</p>
+              </div>
+              <div className="country">
+                <p>{country}</p>
+              </div>
+            </div>
+            <button onClick={() => onRemove(city)} className="text-sm text-rose-600 hover:underline">
+              Remove
+            </button>
+          </div>
+          <p className="text-sm text-rose-600">{weather.error}</p>
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <article className="weather-card">
+      <div className="card-content-wrapper">
+        <div className="card-header-wrapper">
+          <div className="location">
+            <div className="city">
+              <p>{city}</p>
+            </div>
+            <div className="country">
+              <p>{country}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="time">{time}</div>
+            <button
+              aria-label={`Remove ${city}`}
+              onClick={() => onRemove(city)}
+              className="rounded-md bg-slate-200 px-2 py-1 text-xs text-slate-700 transition hover:bg-slate-300"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+
+        <div className="card-body-wrapper">
+          <div className="temp">
+            <p>{weather.currentTemp}&#176;C</p>
+          </div>
+          <div className="weather-desc">
+            <p>{weather.weatherStatus}</p>
+          </div>
+        </div>
+
+        <div className="card-footer-wrapper">
+          <div className="weather-details">
+            <div className="wind-element">
+              <i className="bi bi-wind" />
+              <p>{weather.windSpeed} m/s</p>
+            </div>
+            <div className="humidity-element">
+              <i className="bi bi-droplet" />
+              <p>{weather.humidity}%</p>
+            </div>
+            <div className="pressure-element">
+              <i className="bi bi-speedometer" />
+              <p>{weather.pressure} mb</p>
+            </div>
+          </div>
+          <div className="weather-icon">{weatherIcon || <span className="text-sm text-slate-500">N/A</span>}</div>
+        </div>
+      </div>
+    </article>
+  );
 }

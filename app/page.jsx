@@ -1,187 +1,187 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
-import Image from "next/image";
+
+import { useEffect, useMemo, useState } from "react";
 import Overlay from "../components/overlay.jsx";
 import WeatherCard from "../components/weatherCard.jsx";
 import weatherConditions from "../assets/weatherIcons.jsx";
 
+const STORAGE_KEY = "cities";
+const OPEN_WEATHER_API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY || "93c9563c219fd26bcf5872a459d436c0";
+
 export default function Page() {
-  const buttonRef = useRef(null);
-  const overlayRef = useRef(null);
-  const [overlay, setOverlay] = useState(false);
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const [selectedCities, setSelectedCities] = useState([]);
-  const [weatherInfo, setWeatherInfo] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [cityAddition, setCityAddition] = useState(false);
-  const [removedCity, setRemovedCity] = useState("")
+  const [weatherByCity, setWeatherByCity] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const ApiKey = "93c9563c219fd26bcf5872a459d436c0";
+  const weatherIconMap = useMemo(() => {
+    const map = {};
+    weatherConditions.forEach((condition) => {
+      map[condition.name.toLowerCase()] = condition.icon;
+    });
+    return map;
+  }, []);
 
-  const handleOverlay = () => {
-    setOverlay(true);
-  };
-
-  const closeOverlay = () => {
-    setOverlay(false);
-  };
-
-  const handleCityClickedState = (state) => {
-    setCityAddition(state)
-    if(state) {
-      setOverlay(false);
-    }
-  }
-
-  const handleRemoveCity = (cityName) => {
-    setSelectedCities((prevCities) => 
-      prevCities.filter((city) => city.city !== cityName) 
-    )
-  } 
+  const currentTime = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   useEffect(() => {
-    if (!overlayRef.current) return;
-    if (overlay) {
-      overlayRef.current.classList.remove("hidden");
-    } else if (overlay === false || cityAddition === false) {
-      overlayRef.current.classList.add("hidden");
-    }
-  }, [overlay, cityAddition]);
-
-  useEffect(() => {
-    const storedCities = JSON.parse(localStorage.getItem("cities"));
-    if (storedCities) {
-      setSelectedCities(storedCities);
-      fetchWeatherData(storedCities); // Fetch weather for stored cities initially
+    try {
+      const storedCities = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      if (Array.isArray(storedCities)) {
+        setSelectedCities(storedCities);
+      }
+    } catch {
+      setSelectedCities([]);
     }
   }, []);
 
   useEffect(() => {
-    if (selectedCities.length > 0) {
-      localStorage.setItem("cities", JSON.stringify(selectedCities));
-      fetchWeatherData(selectedCities); // Fetch weather when selectedCities is updated
-    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(selectedCities));
   }, [selectedCities]);
 
-  function fetchWeatherData(cities) {
-    let weatherData = [];
-    Promise.all(
-      cities.map((city) =>
-        fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city.city}&appid=${ApiKey}`)
-          .then((response) => response.json())
-          .catch((error) => console.error("Error fetching data:", error))
-      )
-    )
-    .then((data) => {
-      Promise.all(
-        data.map((city) =>
-          fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${city[0].lat}&lon=${city[0].lon}&appid=${ApiKey}`)
-            .then((response) => response.json())
-            .catch((error) => console.error("Error fetching data:", error))
-        )
-      ).then((weather) => {
-        console.log("Weather data for cities:", weather);
-        weather.forEach((weatherItem) => {
-          weatherData.push([
-            {
-              currentTemp: (weatherItem.main.temp - 273.15).toFixed(0),
-              pressure: weatherItem.main.pressure,
-              humidity: weatherItem.main.humidity,
-              weatherStatus: weatherItem.weather[0].main,
-              windSpeed: weatherItem.wind.speed,
-            },
-          ]);
-        });
-        setWeatherInfo(weatherData);
-        setLoading(false);
-      });
-    });
-  }
+  useEffect(() => {
+    let isCancelled = false;
 
-  function chooseCity(city) {
-    setSelectedCities((prevCities) => {
-      handleRemoveCity(removedCity)
-      const cityExists = prevCities.some(
-        (c) => c.city.toLowerCase() === city.city.toLowerCase()
-      );
-      if (!cityExists) {
-        const updatedCities = [...prevCities, city];
-        fetchWeatherData(updatedCities); 
-        setOverlay(false);
-        return updatedCities;
+    async function fetchWeatherData(cities) {
+      if (!cities.length) {
+        setWeatherByCity({});
+        return;
       }
-      return prevCities;
+
+      setIsLoading(true);
+      setErrorMessage("");
+
+      const entries = await Promise.all(
+        cities.map(async ({ city, country }) => {
+          try {
+            const geoResponse = await fetch(
+              `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(`${city},${country}`)}&limit=1&appid=${OPEN_WEATHER_API_KEY}`
+            );
+            const geoData = await geoResponse.json();
+
+            if (!Array.isArray(geoData) || !geoData[0]) {
+              return [city, { error: "Location not found" }];
+            }
+
+            const { lat, lon } = geoData[0];
+            const weatherResponse = await fetch(
+              `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_API_KEY}`
+            );
+            const weather = await weatherResponse.json();
+
+            if (!weather?.main || !weather?.weather?.[0]) {
+              return [city, { error: "Weather unavailable" }];
+            }
+
+            return [
+              city,
+              {
+                currentTemp: (weather.main.temp - 273.15).toFixed(0),
+                pressure: weather.main.pressure,
+                humidity: weather.main.humidity,
+                weatherStatus: weather.weather[0].main,
+                windSpeed: weather.wind?.speed ?? 0,
+              },
+            ];
+          } catch {
+            return [city, { error: "Request failed" }];
+          }
+        })
+      );
+
+      if (!isCancelled) {
+        setWeatherByCity(Object.fromEntries(entries));
+        setIsLoading(false);
+      }
+    }
+
+    fetchWeatherData(selectedCities);
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [selectedCities]);
+
+  const handleAddCity = (cityData) => {
+    setSelectedCities((prevCities) => {
+      const exists = prevCities.some(
+        (c) => c.city.toLowerCase() === cityData.city.toLowerCase() && c.country.toLowerCase() === cityData.country.toLowerCase()
+      );
+
+      if (exists) {
+        setErrorMessage(`${cityData.city}, ${cityData.country} is already added.`);
+        return prevCities;
+      }
+
+      setErrorMessage("");
+      return [...prevCities, cityData];
     });
-  }
 
-  const currentTime = "15:00";
+    setIsOverlayOpen(false);
+  };
 
-  const noLoading = loading && selectedCities.length > 0;
+  const handleRemoveCity = (cityName) => {
+    setSelectedCities((prevCities) => prevCities.filter((city) => city.city !== cityName));
+    setWeatherByCity((prev) => {
+      const next = { ...prev };
+      delete next[cityName];
+      return next;
+    });
+  };
 
-  console.log(selectedCities)
-  
   return (
-    <>
-      <div className="flex justify-center">
-        <div className="h-20 flex justify-between items-center bg-amber-400 rounded-b-2xl px-5 sm:w-[90%] md:w-[80%] mx-auto max-w-full">
-          <h1 className="text-2xl sm:text-2l md:text-3xl lg:text-3xl">Weather Dashboard</h1>
-          <div className="hover:cursor-pointer">
-            <button
-              onClick={handleOverlay}
-              ref={buttonRef}
-              className="ml-auto sm:h-10 text-md bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600"
-            >
-              Add Country
-            </button>
+    <main className="min-h-screen bg-slate-100 text-slate-900">
+      <div className="mx-auto w-[95%] max-w-6xl py-6">
+        <header className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white px-5 py-4 shadow-sm">
+          <div>
+            <h1 className="text-2xl font-semibold">Weather Dashboard</h1>
+            <p className="text-sm text-slate-500">Track multiple cities at a glance.</p>
           </div>
-        </div>
+          <button
+            onClick={() => setIsOverlayOpen(true)}
+            className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+          >
+            Add City
+          </button>
+        </header>
+
+        {errorMessage && <p className="mt-4 rounded-lg bg-amber-100 px-3 py-2 text-sm text-amber-800">{errorMessage}</p>}
+
+        {isLoading && selectedCities.length > 0 && <p className="mt-4 text-sm text-slate-600">Loading weather data...</p>}
+
+        {!selectedCities.length ? (
+          <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
+            No cities added yet. Click <span className="font-medium">Add City</span> to get started.
+          </div>
+        ) : (
+          <section className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {selectedCities.map(({ city, country }) => {
+              const weather = weatherByCity[city];
+              return (
+                <WeatherCard
+                  key={`${city}-${country}`}
+                  city={city}
+                  country={country}
+                  time={currentTime}
+                  weather={weather}
+                  weatherIcon={weather ? weatherIconMap[weather.weatherStatus?.toLowerCase()] : null}
+                  onRemove={handleRemoveCity}
+                />
+              );
+            })}
+          </section>
+        )}
       </div>
 
-      {noLoading && <div className="text-center mt-5">Loading...</div>}
-
-      {selectedCities && (
-        <div className="mt-5 w-[80%] mx-auto max-w-[80%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {selectedCities.map((city, cityIndex) => (
-            <div key={`city-${cityIndex}`} className="flex justify-center">
-              {weatherInfo[cityIndex]?.map((weather, weatherIndex) => (
-                <WeatherCard
-                  key={`weather-${cityIndex}-${weatherIndex}`}  
-                  setRemoveCity={(city) => {
-                    setRemovedCity(city)
-                  }}
-                  
-                  city={city.city}
-                  country={city.country}
-                  time={currentTime}
-                  temp={weather.currentTemp}
-                  weatherDesc={weather.weatherStatus}
-                  windSpeed={weather.windSpeed}
-                  humidity={weather.humidity}
-                  pressure={weather.pressure}
-                  weatherIcon={weatherConditions.map((condition, index) => (
-                    <div key={index}>{condition.name.toLowerCase() === weather.weatherStatus.toLowerCase() && condition.icon}</div>
-                    ))
-                  }
-                  />
-              ))}
-            </div>
-          ))}
+      {isOverlayOpen && (
+        <div className="fixed inset-0 z-20 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
+          <Overlay setCity={handleAddCity} onClose={() => setIsOverlayOpen(false)} />
         </div>
       )}
-
-      <div ref={overlayRef} className="fixed inset-0 backdrop-blur-sm z-10 hidden">
-        <button
-          onClick={closeOverlay}
-          className="absolute top-20 left-75 md:top-20 md:left-246 lg:top-10 lg:left-206 bg-blue-400 p-2 hover:bg-blue-600 cursor-pointer z-30"
-        >
-          <Image src="/icons8-close.svg" alt="Close Icon" width={24} height={24} className="w-6 h-6" />
-        </button>
-        <div className="fixed inset-0 flex justify-center items-center z-20">
-          <Overlay 
-            setCity={chooseCity}
-            setCityClickedState={handleCityClickedState}
-          />
-        </div>
-      </div>
-    </>
+    </main>
   );
 }
