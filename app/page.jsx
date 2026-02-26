@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import Overlay from "../components/overlay.jsx";
 import WeatherCard from "../components/weatherCard.jsx";
 import weatherConditions from "../assets/weatherIcons.jsx";
@@ -38,15 +39,15 @@ export default function Page() {
   } 
 
   useEffect(() => {
+    if (!overlayRef.current) return;
     if (overlay) {
       overlayRef.current.classList.remove("hidden");
-    } else if(overlay === false || cityAddition === false) {
+    } else if (overlay === false || cityAddition === false) {
       overlayRef.current.classList.add("hidden");
     }
-  }, [overlay]);
+  }, [overlay, cityAddition]);
 
   useEffect(() => {
-    let weatherData = [];
     const storedCities = JSON.parse(localStorage.getItem("cities"));
     if (storedCities) {
       setSelectedCities(storedCities);
@@ -172,7 +173,7 @@ export default function Page() {
           onClick={closeOverlay}
           className="absolute top-20 left-75 md:top-20 md:left-246 lg:top-10 lg:left-206 bg-blue-400 p-2 hover:bg-blue-600 cursor-pointer z-30"
         >
-          <img src="icons8-close.svg" alt="Close Icon" className="w-6" />
+          <Image src="/icons8-close.svg" alt="Close Icon" width={24} height={24} className="w-6 h-6" />
         </button>
         <div className="fixed inset-0 flex justify-center items-center z-20">
           <Overlay 
